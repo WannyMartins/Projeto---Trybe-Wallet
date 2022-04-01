@@ -6,8 +6,8 @@ import Header from '../components/Header';
 
 class Wallet extends React.Component {
   componentDidMount() {
-    const { currencies } = this.props;
-    currencies();
+    const { currenciesApi } = this.props;
+    currenciesApi();
   }
 
   render() {
@@ -36,20 +36,26 @@ class Wallet extends React.Component {
           <label htmlFor="moeda">
             Moeda:
             <select name="moeda" id="moeda">
-              <option value="" key={ currencies }>{ currencies }</option>
+              { currencies.map((currencie) => (
+                <option
+                  value={ currencie }
+                  key={ currencie }
+                >
+                  { currencie }
+                </option>))}
             </select>
           </label>
           <label htmlFor="pagamento">
             Método de Pagamento:
             <select name="pagamento" id="pagamento" data-testid="method-input">
               <option value="dinheiro">Dinheiro</option>
-              <option value="cartaoDebito">Cartão de Débito</option>
-              <option value="cartaoCredito">Cartão de Crédito</option>
+              <option value="cartaoDebito">Cartão de débito</option>
+              <option value="cartaoCredito">Cartão de crédito</option>
             </select>
           </label>
           <label htmlFor="tag">
             Categoria:
-            <select name="tag" id="tag" data-testid="method-input">
+            <select name="tag" id="tag" data-testid="tag-input">
               <option value="alimentacao">Alimentação</option>
               <option value="lazer">Lazer</option>
               <option value="saude">Saúde</option>
@@ -65,11 +71,16 @@ class Wallet extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  currencies: () => dispatch(fetchApi()),
+  currenciesApi: () => dispatch(fetchApi()),
+});
+
+const mapStateToProps = (state) => ({
+  currencies: state.wallet.currencies,
 });
 
 Wallet.propTypes = {
-  currencies: PropTypes.func.isRequired,
+  currenciesApi: PropTypes.func.isRequired,
+  currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
-export default connect(null, mapDispatchToProps)(Wallet);
+export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
