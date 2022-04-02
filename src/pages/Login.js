@@ -13,13 +13,6 @@ class Login extends React.Component {
     };
   }
 
-  handleChange = ({ target }) => {
-    const { name, value } = target;
-    this.setState({
-      [name]: value,
-    });
-  }
-
   isDisabled = () => {
     const { password, email } = this.state;
     const minLength = 6;
