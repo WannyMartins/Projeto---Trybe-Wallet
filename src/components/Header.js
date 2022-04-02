@@ -12,12 +12,12 @@ class Header extends Component {
       const valor = parseFloat(item.value) * currencyValue;
       return valor;
     });
-    const sumTotal = getValueCurrency.reduce((acc, cur) => acc + cur, 0);
+    const sumTotal = getValueCurrency.reduce((acc, cur) => acc + cur, 0).toFixed(2);
 
     return (
       <div>
         <p data-testid="email-field">{ emailStore }</p>
-        <p data-testid="total-field">{sumTotal.toFixed(2)}</p>
+        <p data-testid="total-field">{sumTotal}</p>
         <span data-testid="header-currency-field">BRL</span>
       </div>
     );

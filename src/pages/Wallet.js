@@ -3,6 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { fetchApi, getExchangesRates } from '../actions';
 import Header from '../components/Header';
+import TableDespesas from '../components/TableDespesas';
 
 const INITAIL_STATE = {
   value: 0,
@@ -123,6 +124,7 @@ class Wallet extends React.Component {
             Adicionar Despesas
           </button>
         </form>
+        <TableDespesas />
       </div>
     );
   }
