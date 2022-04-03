@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { deleteDespesa } from '../actions';
 
 class TableDespesas extends Component {
   render() {
-    const { expenses } = this.props;
+    const { expenses, dispatchDelete } = this.props;
 
     const getValueCurrency = expenses.map((item) => {
       const { currency } = item;
@@ -46,7 +47,7 @@ class TableDespesas extends Component {
                 <td>{parseFloat(item.value).toFixed(2)}</td>
                 <td>{getNameCurrency[index]}</td>
                 <td>{getValueCurrency[index].toFixed(2)}</td>
-                <td>
+                <td id="valueConv">
                   {(item.value * getValueCurrency[index]).toFixed(2)}
 
                 </td>
@@ -54,7 +55,13 @@ class TableDespesas extends Component {
                 <td>Real</td>
                 <td>
                   <button type="button">Editar</button>
-                  <button type="button">Excluir</button>
+                  <button
+                    type="button"
+                    data-testid="delete-btn"
+                    onClick={ () => dispatchDelete(item.id) }
+                  >
+                    Excluir
+                  </button>
                 </td>
               </tr>
             ))}
@@ -69,10 +76,15 @@ const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
 });
 
+const mapDispatchToProps = (dispatch) => ({
+  dispatchDelete: (id) => dispatch(deleteDespesa(id)),
+});
+
 TableDespesas.propTypes = {
   expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
+  dispatchDelete: PropTypes.func.isRequired,
 };
 
 // referencia para tag <th> ....... https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/columnheader_role
 
-export default connect(mapStateToProps)(TableDespesas);
+export default connect(mapStateToProps, mapDispatchToProps)(TableDespesas);

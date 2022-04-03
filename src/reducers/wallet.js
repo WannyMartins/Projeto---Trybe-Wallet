@@ -1,4 +1,4 @@
-import { REQUEST_API, RESPONSE_API, SAVE_DATA } from '../actions';
+import { DELETE_DESPESA, REQUEST_API, RESPONSE_API, SAVE_DATA } from '../actions';
 
 const INITIAL_STATE = {
   currencies: [],
@@ -30,6 +30,11 @@ const wallet = (state = INITIAL_STATE, action) => {
       expenses: [...state.expenses, expenseObj],
     };
   }
+  case DELETE_DESPESA:
+    return {
+      ...state,
+      expenses: state.expenses.filter((item) => item.id !== action.id),
+    };
   default:
     return state;
   }

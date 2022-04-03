@@ -12,12 +12,16 @@ class Header extends Component {
       const valor = parseFloat(item.value) * currencyValue;
       return valor;
     });
-    const sumTotal = getValueCurrency.reduce((acc, cur) => acc + cur, 0).toFixed(2);
+    const sumTotal = getValueCurrency.reduce((acc, cur) => {
+      const soma = acc + cur;
+      return soma;
+    },
+    0).toFixed(2);
 
     return (
       <div>
         <p data-testid="email-field">{ emailStore }</p>
-        <p data-testid="total-field">{sumTotal}</p>
+        <p data-testid="total-field" id="sumTotal">{sumTotal}</p>
         <span data-testid="header-currency-field">BRL</span>
       </div>
     );
@@ -28,6 +32,9 @@ const mapStateToProps = (state) => ({
   emailStore: state.user.email,
   expenses: state.wallet.expenses,
 });
+// const mapDispatchToProps = (dispatch) => ({
+//   dispatchSum: (total) => dispatch(subValue(total)),
+// });
 
 Header.propTypes = {
   emailStore: PropTypes.string.isRequired,
