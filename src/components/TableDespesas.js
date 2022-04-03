@@ -1,28 +1,78 @@
-// import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 class TableDespesas extends Component {
   render() {
+    const { expenses } = this.props;
+
+    const getValueCurrency = expenses.map((item) => {
+      const { currency } = item;
+      const currencyValue = item.exchangeRates[currency].ask;
+      return parseFloat(currencyValue);
+    });
+
+    const getNameCurrency = expenses.map((item) => {
+      const { currency } = item;
+      const nameCurrency = item.exchangeRates[currency].name;
+      const splitName = nameCurrency.split('/', 1);// aqui localiza o / divide em duas strings e retorna somente a 1 === ref >>>https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/String/split
+      return splitName;
+    });
+
     return (
-      <table>
-        <thead>
-          <tr>
-            <th>Descrição</th>
-            <th>Tag</th>
-            <th>Método de pagamento</th>
-            <th>Valor</th>
-            <th>Moeda</th>
-            <th>Câmbio utilizado</th>
-            <th>Valor convertido</th>
-            <th>Moeda de conversão</th>
-            <th>Editar/Excluir</th>
-          </tr>
-        </thead>
-      </table>
+      <div>
+        <table>
+          <thead>
+            <tr>
+              <th>Índice</th>
+              <th>Descrição</th>
+              <th>Tag</th>
+              <th>Método de pagamento</th>
+              <th>Valor</th>
+              <th>Moeda</th>
+              <th>Câmbio utilizado</th>
+              <th>Valor convertido</th>
+              <th>Moeda de conversão</th>
+              <th>Editar/Excluir</th>
+            </tr>
+          </thead>
+          <tbody>
+            {expenses.map((item, index) => (
+              <tr key={ item.id }>
+                <td>{item.id + 1}</td>
+                <td>{item.description}</td>
+                <td>{item.tag}</td>
+                <td>{item.method}</td>
+                <td>{parseFloat(item.value).toFixed(2)}</td>
+                <td>{getNameCurrency[index]}</td>
+                <td>{getValueCurrency[index].toFixed(2)}</td>
+                <td>
+                  {(item.value * getValueCurrency[index]).toFixed(2)}
+
+                </td>
+                {/* sintaxe retirada do site do alura */}
+                <td>Real</td>
+                <td>
+                  <button type="button">Editar</button>
+                  <button type="button">Excluir</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     );
   }
 }
 
+const mapStateToProps = (state) => ({
+  expenses: state.wallet.expenses,
+});
+
+TableDespesas.propTypes = {
+  expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
+
 // referencia para tag <th> ....... https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/columnheader_role
 
-export default TableDespesas;
+export default connect(mapStateToProps)(TableDespesas);

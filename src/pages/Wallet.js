@@ -5,7 +5,7 @@ import { fetchApi, getExchangesRates } from '../actions';
 import Header from '../components/Header';
 import TableDespesas from '../components/TableDespesas';
 
-const INITAIL_STATE = {
+const INITIAL_STATE = {
   value: 0,
   description: '',
   currency: 'USD',
@@ -16,7 +16,7 @@ const INITAIL_STATE = {
 class Wallet extends React.Component {
   constructor(props) {
     super(props);
-    this.state = INITAIL_STATE;
+    this.state = INITIAL_STATE;
   }
 
   componentDidMount() {
@@ -35,7 +35,7 @@ class Wallet extends React.Component {
     event.preventDefault();
     const { expensesDispatch } = this.props;
     expensesDispatch(this.state);
-    this.setState(INITAIL_STATE);
+    this.setState(INITIAL_STATE);
   }
 
   render() {
