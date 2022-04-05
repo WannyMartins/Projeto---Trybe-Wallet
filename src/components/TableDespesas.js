@@ -54,7 +54,14 @@ class TableDespesas extends Component {
                 {/* sintaxe retirada do site do alura */}
                 <td>Real</td>
                 <td>
-                  <button type="button">Editar</button>
+                  <button
+                    type="button"
+                    data-testid="edit-btn"
+                    onClick={ () => {} }
+                  >
+                    Editar
+
+                  </button>
                   <button
                     type="button"
                     data-testid="delete-btn"
