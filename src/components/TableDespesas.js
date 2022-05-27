@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { deleteDespesa } from '../actions';
+import { deleteDespesa, editeDespesa } from '../actions';
 
 class TableDespesas extends Component {
   render() {
-    const { expenses, dispatchDelete } = this.props;
+    const { expenses, dispatchDelete, dispatchEdite } = this.props;
 
     const getValueCurrency = expenses.map((item) => {
       const { currency } = item;
@@ -57,7 +57,7 @@ class TableDespesas extends Component {
                   <button
                     type="button"
                     data-testid="edit-btn"
-                    onClick={ () => {} }
+                    onClick={ () => dispatchEdite(item.id) }
                   >
                     Editar
 
@@ -85,11 +85,13 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   dispatchDelete: (id) => dispatch(deleteDespesa(id)),
+  dispatchEdite: (id) => dispatch(editeDespesa(id)),
 });
 
 TableDespesas.propTypes = {
   expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
   dispatchDelete: PropTypes.func.isRequired,
+  dispatchEdite: PropTypes.func.isRequired,
 };
 
 // referencia para tag <th> ....... https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/columnheader_role

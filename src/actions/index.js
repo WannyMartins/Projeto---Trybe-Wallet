@@ -3,11 +3,13 @@ export const REQUEST_API = 'REQUEST_API';
 export const RESPONSE_API = 'RESPONSE_API';
 export const SAVE_DATA = 'SAVE_DATA';
 export const DELETE_DESPESA = 'DELETE_DESPESA';
+export const EDITE_DESPESA = 'EDITE_DESPESA';
 
 export const userEmail = (email) => ({ type: USER_EMAIL, email });
 export const requestApi = (data) => ({ type: REQUEST_API, data });
 export const responseApi = (data) => ({ type: RESPONSE_API, data });
 export const deleteDespesa = (id) => ({ type: DELETE_DESPESA, id });
+export const editeDespesa = (id) => ({ type: EDITE_DESPESA, id });
 
 export const saveData = (expense, exchangeRates) => (
   { type: SAVE_DATA,

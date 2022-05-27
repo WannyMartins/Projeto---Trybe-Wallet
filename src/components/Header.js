@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import { GiWallet } from 'react-icons/gi';
 import { connect } from 'react-redux';
+import './header.css';
 
 class Header extends Component {
   render() {
@@ -19,10 +21,25 @@ class Header extends Component {
     0).toFixed(2);
 
     return (
-      <div>
-        <p data-testid="email-field">{ emailStore }</p>
-        <p data-testid="total-field" id="sumTotal">{sumTotal}</p>
-        <span data-testid="header-currency-field">BRL</span>
+      <div className="container-header">
+        <h1>
+          Trybe Wallet
+          <GiWallet />
+        </h1>
+        <div className="dados-valor">
+          <p data-testid="email-field">{ emailStore }</p>
+          <div className="valor-content">
+            <p data-testid="total-field" id="sumTotal" className="valor">
+              <span>R$ </span>
+              {sumTotal}
+              <span data-testid="header-currency-field"> BRL</span>
+            </p>
+            {/* {clicked ?
+               <MdAttachMoney className="icon-money" /> : <MdMoneyOffCsred />} */}
+
+          </div>
+
+        </div>
       </div>
     );
   }
